@@ -1,0 +1,575 @@
+<div class="container-fluid mt-4 px-4">
+
+  <!-- Welcome Header with Gradient -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div
+        class="card border-0 shadow-lg rounded-4 overflow-hidden"
+        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
+      >
+        <div class="card-body p-4 text-white">
+          <div
+            class="d-flex justify-content-between align-items-center flex-wrap"
+          >
+            <div>
+              <h2 class="mb-1 fw-bold">
+                Karibu! ,
+                {{user.name}}
+              </h2>
+              <p class="mb-0 opacity-75">Monitor requests, donations, and
+                partner organizations at a glance</p>
+            </div>
+            <div class="text-end d-none d-md-block">
+              <p class="mb-1 small opacity-75">
+                <i class="bi bi-calendar-event me-1"></i>Today's Date
+              </p>
+              <h5 class="mb-0 fw-bold" id="currentDateNGO"></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Overview Cards - Clickable -->
+  <div class="row g-4 mb-5">
+    <!-- Total Farmers Card -->
+    <div class="col-xl-3 col-md-6">
+      <a href="/ngo/farmers" class="text-decoration-none">
+        <div
+          class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
+        >
+          <div
+            class="position-absolute top-0 end-0 opacity-10"
+            style="font-size: 150px; margin-top: -40px; margin-right: -40px;"
+          >
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div class="card-body p-4 position-relative text-white">
+            <div class="d-flex align-items-center mb-3">
+              <div>
+                <p
+                  class="mb-0 small text-uppercase fw-semibold opacity-75"
+                >Total Farmers</p>
+                <h1 class="mb-0 fw-bold display-5">{{stats.totalFarmers}}</h1>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <small class="opacity-75">
+                <i class="bi bi-arrow-up-circle-fill me-1"></i>Registered
+                Partners
+              </small>
+              <i class="bi bi-arrow-right-circle fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Pending Requests Card -->
+    <div class="col-xl-3 col-md-6">
+      <a href="/ngo/request" class="text-decoration-none">
+        <div
+          class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+          style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"
+        >
+          <div
+            class="position-absolute top-0 end-0 opacity-10"
+            style="font-size: 150px; margin-top: -40px; margin-right: -40px;"
+          >
+            <i class="bi bi-hourglass-split"></i>
+          </div>
+          <div class="card-body p-4 position-relative text-white">
+            <div class="d-flex align-items-center mb-3">
+              <div>
+                <p class="mb-0 small text-uppercase fw-semibold opacity-75">Make
+                  Request to Farmers</p>
+                <h1
+                  class="mb-0 fw-bold display-5"
+                >{{stats.pendingRequests}}</h1>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <small class="opacity-75">
+                <i class="bi bi-clock-fill me-1"></i>Awaiting Action
+              </small>
+              <i class="bi bi-arrow-right-circle fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Approved Companies Card -->
+    <div class="col-xl-3 col-md-6">
+      <a href="/pick" class="text-decoration-none">
+        <div
+          class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+          style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"
+        >
+          <div
+            class="position-absolute top-0 end-0 opacity-10"
+            style="font-size: 150px; margin-top: -40px; margin-right: -40px;"
+          >
+            <i class="bi bi-building-check"></i>
+          </div>
+          <div class="card-body p-4 position-relative text-white">
+            <div class="d-flex align-items-center mb-3">
+              <i class="bi bi-building-check fs-2"></i>
+              <div>
+                <p
+                  class="mb-0 small text-uppercase fw-semibold opacity-75"
+                >Approved Companies</p>
+                <h1
+                  class="mb-0 fw-bold display-5"
+                >{{stats.approvedCompanies}}</h1>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <small class="opacity-75">
+                <i class="bi bi-check-circle-fill me-1"></i>Verified Partners
+              </small>
+              <i class="bi bi-arrow-right-circle fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Total Donations Card -->
+    <div class="col-xl-3 col-md-6">
+      <a href="/pick" class="text-decoration-none">
+        <div
+          class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+          style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"
+        >
+          <div
+            class="position-absolute top-0 end-0 opacity-10"
+            style="font-size: 150px; margin-top: -40px; margin-right: -40px;"
+          >
+            <i class="bi bi-gift-fill"></i>
+          </div>
+          <div class="card-body p-4 position-relative text-white">
+            <div class="d-flex align-items-center mb-3">
+              <i class="bi bi-gift-fill fs-2"></i>
+              <div>
+                <p
+                  class="mb-0 small text-uppercase fw-semibold opacity-75"
+                >Total Donations</p>
+                <h1 class="mb-0 fw-bold display-5">{{stats.totalDonations}}</h1>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <small class="opacity-75">
+                <i class="bi bi-box-seam-fill me-1"></i>All Contributions
+              </small>
+              <i class="bi bi-arrow-right-circle fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Quick Actions Section -->
+<div class="row g-4 mb-5">
+  <div class="col-md-3">
+    <a href="/ngo/request" class="text-decoration-none">
+      <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift-small">
+        <div class="card-body text-center p-4">
+          <div
+            class="bg-primary bg-opacity-10 rounded-circle mx-auto mb-3"
+            style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;"
+          >
+            <i class="bi bi-inbox-fill text-primary fs-2"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-2">Manage Requests</h6>
+          <p class="text-muted small mb-0">Review and approve pending requests</p>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-md-3">
+    <a href="/ngo/farmers" class="text-decoration-none">
+      <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift-small">
+        <div class="card-body text-center p-4">
+          <div
+            class="bg-success bg-opacity-10 rounded-circle mx-auto mb-3"
+            style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;"
+          >
+            <i class="bi bi-person-lines-fill text-success fs-2"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-2">View Farmers</h6>
+          <p class="text-muted small mb-0">Access farmer database</p>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-md-3">
+    <a href="/pick" class="text-decoration-none">
+      <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift-small">
+        <div class="card-body text-center p-4">
+          <div
+            class="bg-info bg-opacity-10 rounded-circle mx-auto mb-3"
+            style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;"
+          >
+            <i class="bi bi-building-fill-check text-info fs-2"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-2">Companies</h6>
+          <p class="text-muted small mb-0">Manage partner organizations</p>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- NEW CARD: All Company Offers (NGO + Company) -->
+  <div class="col-md-3">
+    <a href="/pick" class="text-decoration-none">
+      <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift-small
+        {{#if (eq currentPath '/company/pick')}} border-primary border-3 bg-primary bg-opacity-10 {{/if}}
+      ">
+        <div class="card-body text-center p-4">
+          <div
+            class="bg-warning bg-opacity-10 rounded-circle mx-auto mb-3
+              {{#if (eq currentPath '/company/pick')}} bg-white {{/if}}
+            "
+            style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;"
+          >
+            <i class="bi bi-building-fill text-warning fs-2"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-2">Company Offers</h6>
+          <p class="text-muted small mb-0">
+            {{#if (eq user.role 'ngo')}}
+              Review & approve donations
+            {{else}}
+              View your submitted offers
+            {{/if}}
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="container-fluid mt-4 px-4">
+  <h3 class="mb-4">All Company Requests</h3>
+
+  {{#if ../success_msg}}
+    <div class="alert alert-success">{{../success_msg}}</div>
+  {{/if}}
+  {{#if ../error_msg}}
+    <div class="alert alert-danger">{{../error_msg}}</div>
+  {{/if}}
+
+  <!-- SEARCH & FILTERS -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <form method="GET" action="/pick" id="searchForm">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label">Search Companies</label>
+            <input type="text" name="search" class="form-control" placeholder="Company name, email, or type..." value="{{searchQuery}}" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="">All Status</option>
+              <option value="pending" {{#if (eq statusFilter "pending")}}selected{{/if}}>Pending</option>
+              <option value="approved" {{#if (eq statusFilter "approved")}}selected{{/if}}>Approved</option>
+              <option value="rejected" {{#if (eq statusFilter "rejected")}}selected{{/if}}>Rejected</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Request Type</label>
+            <select name="type" class="form-select">
+              <option value="">All Types</option>
+              <option value="donation" {{#if (eq typeFilter "donation")}}selected{{/if}}>Donation</option>
+              <option value="partnership" {{#if (eq typeFilter "partnership")}}selected{{/if}}>Partnership</option>
+              <option value="csr" {{#if (eq typeFilter "csr")}}selected{{/if}}>CSR</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- RESULTS COUNTER -->
+  <div class="mb-3">
+    <p class="text-muted mb-2">
+      Showing <strong>{{filteredCount}}</strong> of <strong>{{totalCount}}</strong> total requests
+      {{#if searchQuery}}<span class="badge bg-info ms-2">Searching "{{searchQuery}}"</span>{{/if}}
+    </p>
+  </div>
+
+  <!-- MAIN TABLE -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-light border-0">
+      <div class="d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Requests List</h6>
+        <a href="/pick" class="btn btn-sm btn-outline-secondary">Reset Filters</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Company</th>
+              <th>Type</th>
+              <th>Details</th>
+              <th>Submitted</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each requests}}
+              <tr>
+                <td class="fw-medium text-muted">{{add @index 1}}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar avatar-sm me-3 bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center">
+                      Building
+                    </div>
+                    <div>
+                      <div class="fw-bold">{{company.name}}</div>
+                      <small class="text-muted">{{company.email}}</small>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge
+                    {{#if (eq type "donation")}}bg-success{{/if}}
+                    {{#if (eq type "partnership")}}bg-info{{/if}}
+                    {{#if (eq type "csr")}}bg-warning text-dark{{/if}}
+                  ">{{type}}</span>
+                </td>
+                <td>
+                  <div class="small">
+                    {{#if amount}}
+                      KES {{formatNumber amount}}
+                    {{else}}
+                      {{#if items.length}}
+                        {{items.length}} item{{#if (gt items.length 1)}}s{{/if}}
+                        <br><small class="text-muted">
+                          {{#each items}}
+                            {{this}}{{#unless @last}}, {{/unless}}
+                          {{/each}}
+                        </small>
+                      {{else}}
+                        Project Details
+                      {{/if}}
+                    {{/if}}
+                  </div>
+                  {{#if message}}
+                    <div class="mt-1">
+                      <small class="text-muted fst-italic">"{{truncate message 50}}"</small>
+                    </div>
+                  {{/if}}
+                </td>
+                <td>
+                  <div class="small">{{formatDate createdAt}}</div>
+                  <div class="text-muted small">{{formatRelative createdAt}}</div>
+                </td>
+
+                <!-- STATUS COLUMN: NGO GETS DROPDOWN ON EVERY ROW -->
+                <td>
+                  {{#if (eq ../user.role "ngo")}}
+                    <form action="/ngo/company/request/update/{{_id}}" method="POST" class="d-inline">
+                      <select name="status"
+                              class="form-select form-select-sm w-auto d-inline-block"
+                              onchange="this.form.submit()">
+                        <option value="pending"   {{#if (eq status "pending")}}selected{{/if}}>Pending</option>
+                        <option value="approved"  {{#if (eq status "approved")}}selected{{/if}}>Approved</option>
+                        <option value="rejected"  {{#if (eq status "rejected")}}selected{{/if}}>Rejected</option>
+                      </select>
+                      <input type="hidden" name="returnUrl" value="{{../currentUrl}}" />
+                    </form>
+                  {{else}}
+                    <span class="badge fs-6 px-3 py-2
+                      {{#if (eq status "pending")}}bg-warning{{/if}}
+                      {{#if (eq status "approved")}}bg-success{{/if}}
+                      {{#if (eq status "rejected")}}bg-danger{{/if}}
+                    ">
+                      {{capitalize status}}
+                    </span>
+                    {{#if (eq status "pending")}}
+                      <div class="mt-1"><small class="text-muted">Awaiting review</small></div>
+                    {{/if}}
+                  {{/if}}
+                </td>
+              </tr>
+            {{else}}
+              <tr>
+                <td colspan="6" class="text-center py-5">
+                  <div class="text-muted">
+                    Empty Inbox
+                    <h5>No requests match your filters</h5>
+                    <p class="mb-3">Try adjusting your search criteria above.</p>
+                    <a href="/pick" class="btn btn-primary">Show All Requests</a>
+                  </div>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+      {{#if showPagination}}
+      <nav aria-label="Requests pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+          {{#if hasPrevPage}}
+            <li class="page-item">
+              <a class="page-link" href="/pick?page={{prevPage}}&search={{searchQuery}}&status={{statusFilter}}&type={{typeFilter}}" aria-label="Previous">
+                Previous
+              </a>
+            </li>
+          {{else}}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+          {{/if}}
+
+          {{#each pages}}
+            <li class="page-item {{#if active}}active{{/if}}">
+              <a class="page-link" href="/pick?page={{number}}&search={{../searchQuery}}&status={{../statusFilter}}&type={{../typeFilter}}">{{number}}</a>
+            </li>
+          {{/each}}
+
+          {{#if hasNextPage}}
+            <li class="page-item">
+              <a class="page-link" href="/pick?page={{nextPage}}&search={{searchQuery}}&status={{statusFilter}}&type={{typeFilter}}" aria-label="Next">
+                Next
+              </a>
+            </li>
+          {{else}}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+          {{/if}}
+        </ul>
+      </nav>
+      {{/if}}
+    </div>
+  </div>
+</div>
+  <!-- Activity Summary Section -->
+  <div class="row mt-5 g-4">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-header bg-white border-0 py-3">
+          <h6 class="mb-0 fw-bold text-dark">
+            <i class="bi bi-clock-history text-primary me-2"></i>Recent Activity
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-start mb-3 pb-3 border-bottom">
+            <div
+              class="bg-success bg-opacity-10 rounded-circle p-2 me-3 flex-shrink-0"
+            >
+              <i class="bi bi-check-circle-fill text-success"></i>
+            </div>
+            <div>
+              <p class="mb-1 small fw-semibold">Request approved</p>
+              <small class="text-muted">Farmer registration approved - 2 hours
+                ago</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-start mb-3 pb-3 border-bottom">
+            <div
+              class="bg-primary bg-opacity-10 rounded-circle p-2 me-3 flex-shrink-0"
+            >
+              <i class="bi bi-person-plus-fill text-primary"></i>
+            </div>
+            <div>
+              <p class="mb-1 small fw-semibold">New farmer registered</p>
+              <small class="text-muted">Wayne Achoki joined the platform - 5
+                hours ago</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-start">
+            <div
+              class="bg-warning bg-opacity-10 rounded-circle p-2 me-3 flex-shrink-0"
+            >
+              <i class="bi bi-gift-fill text-warning"></i>
+            </div>
+            <div>
+              <p class="mb-1 small fw-semibold">New donation received</p>
+              <small class="text-muted">50kg of maize donated - 1 day ago</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-header bg-white border-0 py-3">
+          <h6 class="mb-0 fw-bold text-dark">
+            <i class="bi bi-graph-up-arrow text-success me-2"></i>Platform
+            Overview
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="row text-center g-3">
+            <div class="col-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <i class="bi bi-people-fill text-primary fs-3 mb-2"></i>
+                <h4 class="mb-0 fw-bold text-dark">{{stats.totalFarmers}}</h4>
+                <small class="text-muted">Active Farmers</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <i class="bi bi-building-fill text-info fs-3 mb-2"></i>
+                <h4
+                  class="mb-0 fw-bold text-dark"
+                >{{stats.approvedCompanies}}</h4>
+                <small class="text-muted">Companies</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <i class="bi bi-box-seam-fill text-success fs-3 mb-2"></i>
+                <h4 class="mb-0 fw-bold text-dark">{{stats.totalDonations}}</h4>
+                <small class="text-muted">Donations</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <i class="bi bi-hourglass-split text-warning fs-3 mb-2"></i>
+                <h4
+                  class="mb-0 fw-bold text-dark"
+                >{{stats.pendingRequests}}</h4>
+                <small class="text-muted">Pending</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Custom CSS for Animations -->
+<style>
+  .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor:
+  pointer; } .hover-lift:hover { transform: translateY(-10px); box-shadow: 0
+  15px 35px rgba(0, 0, 0, 0.2) !important; } .hover-lift-small { transition: all
+  0.3s ease; cursor: pointer; } .hover-lift-small:hover { transform:
+  translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important; }
+  .hover-row { transition: all 0.3s ease; } .hover-row:hover { background:
+  linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(255, 255, 255, 0)
+  100%); transform: scale(1.01); } .clickable-card { transition: all 0.3s ease;
+  cursor: pointer; }
+</style>
+
+<script>
+
+  document.getElementById('currentDateNGO'); if (dateElement) { const options =
+  { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+  dateElement.textContent = new Date().toLocaleDateString('en-US', options); }
+</script>

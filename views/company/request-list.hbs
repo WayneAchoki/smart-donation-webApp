@@ -1,0 +1,56 @@
+
+<div class="container-fluid mt-4 px-4">
+  <h3 class="mb-4">Incoming Company Requests</h3>
+
+  {{#if success_msg}}
+  <div class="alert alert-success">{{success_msg}}</div>
+  {{/if}}
+  {{#if error_msg}}
+  <div class="alert alert-danger">{{error_msg}}</div>
+  {{/if}}
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Company</th>
+              <th>Type</th>
+              <th>Details</th>
+              <th>Submitted</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each requests}}
+            <tr>
+              <td>{{company.name}}</td>
+              <td><span class="badge bg-primary">{{type}}</span></td>
+              <td>{{#if amount}}KES {{amount}}{{else}}{{items.length}} items{{/if}}</td>
+              <td>{{formatDate createdAt}}</td>
+              <td>
+                <span class="badge 
+                  {{#if (eq status "pending")}}bg-warning{{/if}}
+                  {{#if (eq status "approved")}}bg-success{{/if}}
+                  {{#if (eq status "rejected")}}bg-danger{{/if}}">
+                  {{status}}
+                </span>
+              </td>
+              <td>
+                {{#if (eq status "pending")}}
+                <a href="/company/request/approve/{{_id}}" class="btn btn-sm btn-success">Approve</a>
+                <a href="/company/request/deny/{{_id}}" class="btn btn-sm btn-danger">Reject</a>
+                {{/if}}
+              </td>
+            </tr>
+            {{else}}
+            <tr><td colspan="6" class="text-center text-muted">No requests yet.</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

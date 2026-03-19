@@ -1,0 +1,152 @@
+<nav
+  class="navbar navbar-expand-lg navbar-dark sticky-top py-3"
+  style="background: linear-gradient(135deg, #1a3c72, #2a5298);"
+>
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold fs-4" href="/">Smart Donation</a>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarLoggedIn"
+      aria-controls="navbarLoggedIn"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="navbarLoggedIn">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <!-- Services Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="servicesDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Services
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <li><a class="dropdown-item" href="/donate-food">Donate Food</a></li>
+            <li><a class="dropdown-item" href="/volunteer">Volunteer</a></li>
+            <li><a class="dropdown-item" href="/partner">Partner with Us</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+
+        <!-- FAQ Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="faqDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            FAQ
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="faqDropdown">
+            <li><a class="dropdown-item" href="/donation-process">Donation
+                Process</a></li>
+            <li><a class="dropdown-item" href="/password">I forgot my password</a></li>
+            <li><a class="dropdown-item" href="/registerNgo">How to register my
+                NGO or charity?</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Search -->
+      <form class="d-flex me-3" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+
+      <!-- Notifications / Messages -->
+      <ul class="navbar-nav me-3">
+        <li class="nav-item">
+          <a class="nav-link position-relative" href="/notifications">
+            <i class="bi bi-bell"></i>
+            <span
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            >3</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link position-relative" href="/messages">
+            <i class="bi bi-envelope"></i>
+            <span
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            >5</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- User Account -->
+      <ul class="navbar-nav">
+        {{#if user}}
+          <!-- When logged in -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle d-flex align-items-center"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{user.name}}
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userDropdown"
+            >
+              {{#if (eq user.role "farmer")}}
+                <li><a class="dropdown-item" href="/dashboard/farmer">Farmer
+                    Dashboard</a></li>
+              {{/if}}
+              {{#if (eq user.role "ngo")}}
+                <li><a class="dropdown-item" href="/dashboard/ngo">NGO Dashboard</a></li>
+              {{/if}}
+              {{#if (eq user.role "company")}}
+                <li><a class="dropdown-item" href="/dashboard/company">Company
+                    Dashboard</a></li>
+              {{/if}}
+              <li><a
+                  class="dropdown-item text-danger"
+                  href="/logout"
+                >Logout</a></li>
+            </ul>
+          </li>
+        {{else}}
+          <!-- When NOT logged in -->
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <li class="nav-item"><a
+              class="nav-link"
+              href="/register"
+            >Register</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>

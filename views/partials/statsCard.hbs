@@ -1,0 +1,29 @@
+<a href="{{link}}" class="text-decoration-none">
+  <div
+    class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+    style="background: linear-gradient(135deg, {{grad1}} 0%, {{grad2}} 100%);"
+  >
+    <div
+      class="position-absolute top-0 end-0 opacity-10"
+      style="font-size:150px;margin-top:-40px;margin-right:-40px;"
+    >
+
+    </div>
+    <div class="card-body p-4 position-relative text-white">
+      <div class="d-flex align-items-center mb-3">
+        <div>
+          <p
+            class="mb-0 small text-uppercase fw-semibold opacity-75"
+          >{{title}}</p>
+          <h1 class="mb-0 fw-bold display-5">{{value}}</h1>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <small class="opacity-75"><i
+            class="{{smallIcon}} me-1"
+          ></i>{{subtitle}}</small>
+        <i class="bi bi-arrow-right-circle fs-4"></i>
+      </div>
+    </div>
+  </div>
+</a>

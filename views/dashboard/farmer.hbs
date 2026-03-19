@@ -1,0 +1,349 @@
+<div class="container-fluid mt-4 px-4">
+  <!-- Welcome Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div
+        class="card border-0 shadow-sm rounded-4 overflow-hidden"
+        style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);"
+      >
+        <div class="card-body p-4 text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h2 class="mb-1 fw-bold">Karibu, {{user.name}}</h2>
+              <p class="mb-0 opacity-75">Here's what's happening with your farm
+                donations today</p>
+            </div>
+            <div class="text-end d-none d-md-block">
+              <p class="mb-1 small opacity-75">Current Date</p>
+              <h5 class="mb-0 fw-bold" id="currentDate"></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 mb-4">
+      <!-- Quick Actions Card -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-white border-0 py-3">
+          <h5 class="mb-0 fw-bold text-dark">
+            Quick Actions
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <a
+              href="/farmer/requests"
+              class="list-group-item list-group-item-action border-0 py-3 hover-lift-small"
+            >
+              <div class="d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
+                  <i class="bi bi-inbox-fill text-primary fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0 fw-semibold">View NGO Requests</h6>
+                  <small class="text-muted">Check pending requests</small>
+                </div>
+              </div>
+            </a>
+            <a
+              href="/farmer/requests"
+              class="list-group-item list-group-item-action border-0 py-3 hover-lift-small"
+            >
+              <div class="d-flex align-items-center">
+                <div class="bg-warning bg-opacity-10 rounded-circle p-2 me-3">
+                  <i class="bi bi-clock-history text-warning fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0 fw-semibold">History</h6>
+                  <small class="text-muted">Past donations</small>
+                </div>
+              </div>
+            </a>
+            <a
+              href="/logout"
+              class="list-group-item list-group-item-action border-0 py-3 hover-lift-small"
+            >
+              <div class="d-flex align-items-center">
+                <div class="bg-danger bg-opacity-10 rounded-circle p-2 me-3">
+                  <i class="bi bi-box-arrow-right text-danger fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0 fw-semibold text-danger">Sign Out</h6>
+                  <small class="text-muted">Logout from account</small>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <!-- Clickable Stats Cards -->
+      <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+          <a href="/farmer/requests" class="text-decoration-none">
+            <div
+              class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+            >
+              <div
+                class="position-absolute top-0 end-0 opacity-10"
+                style="font-size: 120px; margin-top: -30px; margin-right: -30px;"
+              >
+                <i class="bi bi-box-seam-fill"></i>
+              </div>
+              <div class="card-body p-4 position-relative">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                    <i class="bi bi-box-seam-fill text-success fs-3"></i>
+                  </div>
+                  <div>
+                    <p
+                      class="mb-0 text-muted small text-uppercase fw-semibold"
+                    >Donations</p>
+                    <h2 class="mb-0 fw-bold text-dark">{{donations.length}}</h2>
+                  </div>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div
+                    class="progress-bar bg-success"
+                    role="progressbar"
+                    style="width: 100%"
+                  ></div>
+                </div>
+                <small class="text-success mt-2 d-block">
+                  <i class="bi bi-arrow-up-circle-fill me-1"></i>All time
+                  donations
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <a href="/farmer/requests" class="text-decoration-none">
+            <div
+              class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+            >
+              <div
+                class="position-absolute top-0 end-0 opacity-10"
+                style="font-size: 120px; margin-top: -30px; margin-right: -30px;"
+              >
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+              <div class="card-body p-4 position-relative">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-warning bg-opacity-10 rounded-circle p-3 me-3">
+                    <i class="bi bi-hourglass-split text-warning fs-3"></i>
+                  </div>
+                  <div>
+                    <p
+                      class="mb-0 text-muted small text-uppercase fw-semibold"
+                    >Pending Delivery</p>
+                    <h2 class="mb-0 fw-bold text-dark">{{requests.length}}</h2>
+                  </div>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div
+                    class="progress-bar bg-warning"
+                    role="progressbar"
+                    style="width: 75%"
+                  ></div>
+                </div>
+                <small class="text-warning mt-2 d-block">
+                  <i class="bi bi-clock-fill me-1"></i>Awaiting action
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <a href="/farmer/requests" class="text-decoration-none">
+            <div
+              class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+            >
+              <div
+                class="position-absolute top-0 end-0 opacity-10"
+                style="font-size: 120px; margin-top: -30px; margin-right: -30px;"
+              >
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+              <div class="card-body p-4 position-relative">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                    <i class="bi bi-check-circle-fill text-primary fs-3"></i>
+                  </div>
+                  <div>
+                    <p
+                      class="mb-0 text-muted small text-uppercase fw-semibold"
+                    >Completed</p>
+                  </div>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div
+                    class="progress-bar bg-primary"
+                    role="progressbar"
+                    style="width: 85%"
+                  ></div>
+                </div>
+                <small class="text-primary mt-2 d-block">
+                  <i class="bi bi-graph-up-arrow me-1"></i>Successfully
+                  delivered
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <a href="/farmer/requests" class="text-decoration-none">
+            <div
+              class="card border-0 shadow-sm rounded-4 h-100 hover-lift position-relative overflow-hidden"
+            >
+              <div
+                class="position-absolute top-0 end-0 opacity-10"
+                style="font-size: 120px; margin-top: -30px; margin-right: -30px;"
+              >
+                <i class="bi bi-bell-fill"></i>
+              </div>
+              <div class="card-body p-4 position-relative">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-info bg-opacity-10 rounded-circle p-3 me-3">
+                    <i class="bi bi-bell-fill text-info fs-3"></i>
+                  </div>
+                  <div>
+                    <p
+                      class="mb-0 text-muted small text-uppercase fw-semibold"
+                    >Notifications</p>
+
+                  </div>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div
+                    class="progress-bar bg-info"
+                    role="progressbar"
+                    style="width: 60%"
+                  ></div>
+                </div>
+                <small class="text-info mt-2 d-block">
+                  <i class="bi bi-envelope-fill me-1"></i>New updates
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Recent Activity Section -->
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-0 py-3">
+              <h6 class="mb-0 fw-bold text-dark">
+                <i class="bi bi-clock-history text-primary me-2"></i>Recent
+                Activity
+              </h6>
+            </div>
+            <div class="card-body">
+              <div class="d-flex align-items-start mb-3 pb-3 border-bottom">
+                <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
+                  <i class="bi bi-plus-circle-fill text-success"></i>
+                </div>
+                <div>
+                  <p class="mb-1 small fw-semibold">New donation added</p>
+                  <small class="text-muted">2 hours ago</small>
+                </div>
+              </div>
+              <div class="d-flex align-items-start mb-3 pb-3 border-bottom">
+                <div class="bg-warning bg-opacity-10 rounded-circle p-2 me-3">
+                  <i class="bi bi-hourglass-split text-warning"></i>
+                </div>
+                <div>
+                  <p class="mb-1 small fw-semibold">Request pending review</p>
+                  <small class="text-muted">5 hours ago</small>
+                </div>
+              </div>
+              <div class="d-flex align-items-start">
+                <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
+                  <i class="bi bi-check-circle-fill text-primary"></i>
+                </div>
+                <div>
+                  <p class="mb-1 small fw-semibold">Profile updated</p>
+                  <small class="text-muted">1 day ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-0 py-3">
+              <h6 class="mb-0 fw-bold text-dark">
+                <i class="bi bi-graph-up-arrow text-success me-2"></i>Impact
+                Summary
+              </h6>
+            </div>
+            <div class="card-body">
+              <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                  <small class="text-muted">Donation Goal</small>
+                  <small
+                    class="fw-bold text-success"
+                  >{{donations.length}}/10</small>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div
+                    class="progress-bar bg-success"
+                    role="progressbar"
+                    style="width: 75%"
+                  ></div>
+                </div>
+              </div>
+              <div class="row text-center g-3">
+                <div class="col-6">
+                  <div class="p-3 bg-light rounded-3">
+                    <h4
+                      class="mb-0 fw-bold text-success"
+                    >{{donations.length}}</h4>
+                    <small class="text-muted">Total Items</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 bg-light rounded-3">
+                    <h4 class="mb-0 fw-bold text-primary">0</h4>
+                    <small class="text-muted">People Helped</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom CSS for Animations -->
+<style>
+  .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor:
+  pointer; } .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 12px
+  30px rgba(0, 0, 0, 0.15) !important; } .hover-lift-small { transition: all
+  0.2s ease; } .hover-lift-small:hover { background-color: #f8f9fa; transform:
+  translateX(5px); } .hover-row { transition: all 0.3s ease; } .hover-row:hover
+  { background: linear-gradient(90deg, rgba(46, 204, 113, 0.05) 0%, rgba(255,
+  255, 255, 0) 100%); transform: scale(1.01); } .btn-outline-info:hover,
+  .btn-outline-warning:hover, .btn-outline-danger:hover { transform: scale(1.1);
+  }
+</style>
+
+<script>
+  document.getElementById('currentDate'); if (dateElement) { const options = {
+  weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+  dateElement.textContent = new Date().toLocaleDateString('en-US', options); }
+</script>

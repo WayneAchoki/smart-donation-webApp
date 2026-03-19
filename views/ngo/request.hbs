@@ -1,0 +1,275 @@
+<div class="container mt-5">
+  <!-- Flash Messages -->
+  {{#if success_msg}}
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      {{success_msg}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {{/if}}
+  {{#if error_msg}}
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      {{error_msg}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {{/if}}
+
+  <div class="card shadow rounded-4 border-0">
+    <!-- Gradient Header -->
+    <div class="card-header text-white p-4 border-0" style="background: linear-gradient(135deg, #198754 0%, #20c997 100%);">
+      <h4 class="mb-1">
+        <i class="bi bi-cart-plus me-2"></i>
+        Send Request to Farmers
+      </h4>
+      <small class="opacity-75">Create procurement requests for farmers</small>
+    </div>
+
+    <div class="card-body p-4">
+      <form id="ngoRequestForm" action="/ngo/request" method="POST">
+        <div class="mb-4">
+          <label class="form-label fw-semibold text-success">
+            <i class="bi bi-person-circle me-1"></i>
+            Farmer
+          </label>
+          <select class="form-select form-select-lg shadow-sm" name="farmerId" required>
+            <option value="" selected disabled>Select a farmer</option>
+            {{#each farmers}}
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold text-success">
+            <i class="bi bi-box-seam me-1"></i>
+            Item
+          </label>
+          <input type="text" name="item" class="form-control form-control-lg shadow-sm" placeholder="Enter  the Item to request from farmer" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold text-success">
+            <i class="bi bi-calculator me-1"></i>
+            Quantity
+          </label>
+          <input type="number" name="quantity" class="form-control form-control-lg shadow-sm" placeholder="Enter Quantity" min="1" required>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 shadow">
+          <i class="bi bi-send me-2"></i> Send Request
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Requests Section -->
+  <div class="card shadow rounded-4 border-0 mt-4">
+    <div class="card-header bg-light border-0 p-4">
+      <h5 class="mb-0">
+        <i class="bi bi-list-check me-2 text-success"></i>
+        Existing Requests
+      </h5>
+    </div>
+
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="px-4 py-3">
+                <i class="bi bi-person me-1"></i>
+                Farmer
+              </th>
+              <th class="py-3">
+                <i class="bi bi-box me-1"></i>
+                Item
+              </th>
+              <th class="py-3">
+                <i class="bi bi-calculator me-1"></i>
+                Quantity
+              </th>
+              <th class="py-3">
+                <i class="bi bi-info-circle me-1"></i>
+                Status
+              </th>
+              <th class="py-3">
+                <i class="bi bi-gear me-1"></i>
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each requests}}
+              <tr>
+                <td class="px-4">
+                  <div class="d-flex align-items-center">
+                    {{#if this.farmerId.name}}
+                      <div class="avatar-circle me-2">
+                        {{this.farmerId.name.[0]}}
+                      </div>
+                      <strong>{{this.farmerId.name}}</strong>
+                    {{else}}
+                      <div class="avatar-circle me-2">?</div>
+                      <strong>Unknown Farmer</strong>
+                    {{/if}}
+                  </div>
+                </td>
+                <td>
+                  <i class="bi bi-box-seam text-muted me-1"></i>
+                  {{this.item}}
+                </td>
+                <td>
+                  <span class="badge bg-light text-dark fs-6">{{this.quantity}}</span>
+                </td>
+                <td>
+                  <span class="badge rounded-pill px-3 py-2
+                    {{#if (eq this.status 'Pending')}}bg-warning text-dark
+                    {{else if (eq this.status 'Approved')}}bg-primary
+                    {{else}}bg-success{{/if}}">
+                    <i class="bi 
+                      {{#if (eq this.status 'Pending')}}bi-hourglass-split
+                      {{else if (eq this.status 'Approved')}}bi-check-circle
+                      {{else}}bi-check-all{{/if}} me-1"></i>
+                    {{this.status}}
+                  </span>
+                </td>
+                <td>
+                  <form action="/ngo/requests/{{this._id}}/status" method="POST" class="d-flex gap-2 align-items-center">
+                    <select name="status" class="form-select form-select-sm shadow-sm" style="min-width: 130px;">
+                      <option value="Pending" {{#if (eq this.status 'Pending')}}selected{{/if}}>Pending</option>
+                      <option value="Approved" {{#if (eq this.status 'Approved')}}selected{{/if}}>Approved</option>
+                      <option value="Completed" {{#if (eq this.status 'Completed')}}selected{{/if}}>Completed</option>
+                    </select>
+                    <button class="btn btn-sm btn-success shadow-sm px-3" type="submit">
+                      <i class="bi bi-arrow-repeat me-1"></i>
+                      Update
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Avatar circles for farmer names */
+  .avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+  }
+
+  /* Enhanced form controls */
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15);
+  }
+
+  .form-control,
+  .form-select {
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:hover,
+  .form-select:hover {
+    border-color: #198754;
+  }
+
+  /* Table row hover effect */
+  .table-hover tbody tr {
+    transition: all 0.2s ease;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(25, 135, 84, 0.05);
+    transform: scale(1.005);
+  }
+
+  /* Card animations */
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Button enhancements */
+  .btn {
+    transition: all 0.3s ease;
+  }
+
+  .btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+  }
+
+  /* Badge animations */
+  .badge {
+    transition: all 0.2s ease;
+  }
+
+  .badge:hover {
+    transform: scale(1.05);
+  }
+
+  /* Alert styling */
+  .alert {
+    animation: slideInDown 0.4s ease;
+  }
+
+  @keyframes slideInDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Table header styling */
+  thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: #495057;
+  }
+
+  /* Smooth scrolling for table */
+  .table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: #198754 #f8f9fa;
+  }
+
+  .table-responsive::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .table-responsive::-webkit-scrollbar-track {
+    background: #f8f9fa;
+  }
+
+  .table-responsive::-webkit-scrollbar-thumb {
+    background: #198754;
+    border-radius: 4px;
+  }
+</style>

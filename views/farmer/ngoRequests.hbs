@@ -1,0 +1,204 @@
+<div class="container mt-5">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+    <!-- Header -->
+    <div class="card-header text-white d-flex justify-content-between align-items-center py-4 px-4"
+         style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+      <div>
+        <h3 class="mb-1 fw-bold">
+          <i class="bi bi-handshake-fill me-2"></i>NGO Requests
+        </h3>
+        <p class="mb-0 opacity-75 small">Review & approve/deny NGO aid requests</p>
+      </div>
+      <a href="/dashboard/farmer" class="btn btn-light btn-sm rounded-pill px-4 shadow-sm">
+        <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+      </a>
+    </div>
+
+    <div class="card-body p-4" style="background:#f8f9fa;">
+      {{#if requests.length}}
+        <!-- Stats -->
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-3 bg-white">
+              <div class="card-body d-flex align-items-center">
+                <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                  <i class="bi bi-list-check text-primary fs-4"></i>
+                </div>
+                <div>
+                  <p class="mb-0 text-muted small">Total Requests</p>
+                  <h4 class="mb-0 fw-bold" id="totalCount">{{requests.length}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters & Search (same as before, just data-attributes changed) -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+          <div class="card-body p-4">
+            <div class="row g-3">
+              <div class="col-lg-4 col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-2"><i class="bi bi-search me-1"></i>Search</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-primary"></i></span>
+                  <input type="text" class="form-control border-start-0 ps-0"
+                         placeholder="NGO name, email, item…" id="searchInput" onkeyup="filterTable()">
+                </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-2"><i class="bi bi-funnel me-1"></i>Status</label>
+                <select class="form-select" id="statusFilter" onchange="filterTable()">
+                  <option value="">All</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Denied">Denied</option>
+                </select>
+              </div>
+
+              <div class="col-lg-2 col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-2"><i class="bi bi-calendar-range me-1"></i>Date</label>
+                <select class="form-select" id="dateFilter" onchange="filterTable()">
+                  <option value="">All Time</option>
+                  <option value="today">Today</option>
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                  <option value="year">This Year</option>
+                </select>
+              </div>
+
+              <div class="col-lg-2 col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-2"><i class="bi bi-sort-down me-1"></i>Sort</label>
+                <select class="form-select" id="sortFilter" onchange="filterTable()">
+                  <option value="date-desc">Newest First</option>
+                  <option value="date-asc">Oldest First</option>
+                  <option value="name-asc">NGO (A-Z)</option>
+                  <option value="name-desc">NGO (Z-A)</option>
+                  <option value="item-asc">Item (A-Z)</option>
+                </select>
+              </div>
+
+              <div class="col-lg-2 col-md-12">
+                <label class="form-label small fw-semibold text-muted mb-2"><i class="bi bi-gear me-1"></i>Actions</label>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-outline-primary flex-fill" onclick="resetFilters()" title="Reset"><i class="bi bi-arrow-clockwise"></i></button>
+                  <button class="btn btn-primary flex-fill" onclick="exportData()" title="Export"><i class="bi bi-download"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Counter -->
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+          <div><span class="text-muted small">Showing <strong id="showingCount">{{requests.length}}</strong> of <strong>{{requests.length}}</strong> requests</span></div>
+          <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-outline-secondary" onclick="changeView('grid')" title="Grid"><i class="bi bi-grid-3x3-gap-fill"></i></button>
+            <button type="button" class="btn btn-outline-secondary active" onclick="changeView('table')" title="Table"><i class="bi bi-list-ul"></i></button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card border-0 shadow-sm rounded-3">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0" id="requestsTable">
+                <thead style="background:#e3f2fd;">
+                  <tr>
+                    <th class="py-3 ps-4 text-muted fw-semibold" style="border-bottom:2px solid #2980b9;">
+                      <input type="checkbox" class="form-check-input" id="selectAll" onclick="toggleSelectAll()">
+                    </th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9; cursor:pointer;" onclick="sortTable('index')"># <i class="bi bi-arrow-down-up small"></i></th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9; cursor:pointer;" onclick="sortTable('ngo')">NGO <i class="bi bi-arrow-down-up small"></i></th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9; cursor:pointer;" onclick="sortTable('email')">Email <i class="bi bi-arrow-down-up small"></i></th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9; cursor:pointer;" onclick="sortTable('item')">Item <i class="bi bi-arrow-down-up small"></i></th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9;">Qty</th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9; cursor:pointer;" onclick="sortTable('status')">Status <i class="bi bi-arrow-down-up small"></i></th>
+                    <th class="py-3 text-muted fw-semibold" style="border-bottom:2px solid #2980b9; cursor:pointer;" onclick="sortTable('date')">Date <i class="bi bi-arrow-down-up small"></i></th>
+                    <th class="py-3 pe-4 text-muted fw-semibold" style="border-bottom:2px solid #2980b9;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each requests}}
+                    <tr class="border-bottom request-row"
+                        data-ngo="{{this.ngoName}}"
+                        data-email="{{this.ngoEmail}}"
+                        data-item="{{this.item}}"
+                        data-status="{{this.status}}"
+                        data-date="{{this.createdAt}}">
+                      <td class="ps-4"><input type="checkbox" class="form-check-input request-checkbox"></td>
+                      <td class="ps-4"><span class="badge bg-light text-dark rounded-circle" style="width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-weight:600;">{{@index}}</span></td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="bg-primary bg-opacity-10 rounded-circle me-2" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
+                            <i class="bi bi-building text-primary"></i>
+                          </div>
+                          <span class="fw-semibold text-dark">{{this.ngoName}}</span>
+                        </div>
+                      </td>
+                      <td><span class="text-muted"><i class="bi bi-envelope me-1"></i>{{this.ngoEmail}}</span></td>
+                      <td>{{this.item}}</td>
+                      <td>{{this.quantity}}</td>
+                      <td>
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background:{{#if (eq this.status 'Approved')}}linear-gradient(135deg,#2ecc71,#27ae60){{else if (eq this.status 'Denied')}}linear-gradient(135deg,#e74c3c,#c0392b){{else}}linear-gradient(135deg,#f1c40f,#f39c12){{/if}};color:#fff;">
+                          {{this.status}}
+                        </span>
+                      </td>
+                      <td class="pe-4"><span class="text-muted"><i class="bi bi-calendar-event me-1"></i>{{formatDate this.createdAt}}</span></td>
+                      <td>
+                        {{#if (eq this.status 'Pending')}}
+                          <form action="/farmer/requests/{{this._id}}/approve" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success rounded-pill px-3"><i class="bi bi-check-lg"></i></button>
+                          </form>
+                          <form action="/farmer/requests/{{this._id}}/deny" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3"><i class="bi bi-x-lg"></i></button>
+                          </form>
+                        {{else}}
+                          <span class="text-muted">No actions</span>
+                        {{/if}}
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- No results -->
+            <div id="noResults" class="text-center py-5" style="display:none;">
+              <div class="mb-3"><i class="bi bi-search text-muted" style="font-size:3rem;"></i></div>
+              <h5 class="text-dark mb-2">No Requests Found</h5>
+              <p class="text-muted">Try adjusting your filters or search terms</p>
+              <button class="btn btn-primary btn-sm rounded-pill px-4" onclick="resetFilters()"><i class="bi bi-arrow-clockwise me-1"></i>Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bulk actions (same logic, just rename IDs) -->
+        <div id="bulkActionsBar" class="card border-0 shadow-sm rounded-3 mt-3" style="display:none;">
+          <div class="card-body p-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted"><strong id="selectedCount">0</strong> request(s) selected</span>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-primary" onclick="bulkAction('export')"><i class="bi bi-download me-1"></i>Export</button>
+                <button class="btn btn-outline-danger" onclick="bulkAction('delete')"><i class="bi bi-trash me-1"></i>Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {{else}}
+        <!-- Empty state -->
+        <div class="text-center py-5">
+          <div class="mb-4">
+            <div class="bg-primary bg-opacity-10 rounded-circle mx-auto" style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;">
+              <i class="bi bi-handshake text-primary" style="font-size:2.5rem;"></i>
+            </div>
+          </div>
+          <h5 class="text-dark mb-2">No NGO Requests Yet</h5>
+          <p class="text-muted">When NGOs send aid requests they will appear here.</p>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
